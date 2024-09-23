@@ -12,22 +12,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+    - name: Clone repository
+      uses: actions/checkout@v4
 
     - name: Set up Flutter
       uses: subosito/flutter-action@v2
       with:
-        flutter-version: 'stable'
+        channel: stable  # Set the Flutter channel to stable
+        flutter-version-file: pubspec.yaml  # Specify pubspec.yaml to determine version
+
+    - name: Check Flutter version
+      run: flutter --version  # Verifies the Flutter version in the workflow
 
     - name: Install Flutter dependencies
-      run: flutter pub get
+      run: flutter pub get  # Install project dependencies
 
     - name: Build APK
-      run: flutter build apk --release
+      run: flutter build apk --release  # Build the APK in release mode
 
     - name: Upload APK to artifacts
       uses: actions/upload-artifact@v3
       with:
         name: flutter-apk
-        path: build/app/outputs/flutter-apk/app-release.apk
+        path: build/app/outputs/flutter-apk/app-release.apk  # Path to the generated APK file
