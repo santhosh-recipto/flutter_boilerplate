@@ -18,8 +18,8 @@ jobs:
     - name: Set up Flutter
       uses: subosito/flutter-action@v2
       with:
-        channel: stable  # Set the Flutter channel to stable
-        flutter-version-file: pubspec.yaml  # Specify pubspec.yaml to determine version
+        channel: stable  # Flutter channel (stable, beta, etc.)
+        flutter-version: 3.19.0  # Specify exact version of Flutter
 
     - name: Check Flutter version
       run: flutter --version  # Verifies the Flutter version in the workflow
