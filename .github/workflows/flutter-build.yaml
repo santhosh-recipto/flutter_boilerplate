@@ -1,37 +1,33 @@
-name: Flutter APK Build
+name: Flutter Build APK
 
 on:
   push:
     branches:
-      - main  # or any other branch you'd like to trigger the action on
-
-  workflow_dispatch:  # Allows manual triggering from the Actions tab
+      - main
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Clone repository
-      uses: actions/checkout@v4
+      - name: Clone repository
+        uses: actions/checkout@v4
 
-    - name: Set up Flutter
-      uses: subosito/flutter-action@v2
-      with:
-        channel: stable  # Flutter channel (stable, beta, etc.)
-        flutter-version: 3.19.0  # Specify exact version of Flutter
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: 3.19.0  # Ensure this matches the one in your pubspec.yaml
 
-    - name: Check Flutter version
-      run: flutter --version  # Verifies the Flutter version in the workflow
+      - name: Install dependencies
+        run: flutter pub get
 
-    - name: Install Flutter dependencies
-      run: flutter pub get  # Install project dependencies
+      - name: Build APK
+        run: flutter build apk --release --verbose
 
-    - name: Build APK
-      run: flutter build apk --release --verbose  # Build the APK in release mode
-
-    - name: Upload APK to artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: flutter-apk
-        path: build/app/outputs/flutter-apk/app-release.apk  # Path to the generated APK file
+      - name: Upload APK to GitHub Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: flutter-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
