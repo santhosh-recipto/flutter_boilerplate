@@ -28,7 +28,7 @@ jobs:
       run: flutter pub get  # Install project dependencies
 
     - name: Build APK
-      run: flutter build apk --release  # Build the APK in release mode
+      run: flutter build apk --release --verbose  # Build the APK in release mode
 
     - name: Upload APK to artifacts
       uses: actions/upload-artifact@v3
